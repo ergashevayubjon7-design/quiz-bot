@@ -9,6 +9,8 @@
     --transition-speed: 0.3s;
     --border-radius: 16px;
     --border-radius-sm: 10px;
+    --prize-gold: #ffd700;
+    --prize-gold-glow: rgba(255, 215, 0, 0.3);
 }
 
 body {
@@ -69,6 +71,21 @@ body {
 
 @keyframes fillBar {
     from { width: 0%; }
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px var(--prize-gold-glow); }
+    50%      { box-shadow: 0 0 40px var(--prize-gold-glow), 0 0 60px rgba(255, 215, 0, 0.1); }
+}
+
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes trophyFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-10px) scale(1.05); }
 }
 
 /* ── Buttons ──────────────────────────────────────────────── */
@@ -173,11 +190,16 @@ body {
 
 .progress-info {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     font-size: 14px;
     color: var(--tg-theme-hint-color, #888);
     font-weight: 500;
     margin-bottom: 8px;
+}
+
+.score-display {
+    color: var(--tg-theme-button-color, #8774e1);
+    font-weight: 700;
 }
 
 .progress-bar-container {
@@ -280,7 +302,7 @@ body {
     background: rgba(244, 67, 54, 0.3);
 }
 
-/* ── Result Screen ────────────────────────────────────────── */
+/* ── Regular Result Screen ────────────────────────────────── */
 #screen-result {
     justify-content: center;
     align-items: center;
@@ -367,6 +389,185 @@ body {
     padding: 16px 32px;
 }
 
+/* ── Prize Quiz Screen ───────────────────────────────────────*/
+#screen-prize-quiz {
+    position: relative;
+}
+
+.prize-level {
+    color: var(--prize-gold, #ffd700);
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.prize-badge {
+    display: inline-block;
+    align-self: center;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    color: #1a1a2e;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    animation: glow 2s ease-in-out infinite;
+}
+
+.prize-progress {
+    background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+    background-size: 200% auto;
+    animation: shimmer 2s linear infinite, fillBar 0.6s ease-out;
+}
+
+/* ── Prize Result Screen ─────────────────────────────────────*/
+#screen-prize-result {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.prize-result-content {
+    animation: slideUp 0.6s ease-out;
+}
+
+.prize-result-glow {
+    font-size: 80px;
+    margin-bottom: 12px;
+    animation: trophyFloat 2s ease-in-out infinite;
+}
+
+.prize-result-title {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.prize-final-score {
+    font-size: 56px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+}
+
+.prize-final-big {
+    color: var(--prize-gold, #ffd700);
+    text-shadow: 0 0 20px var(--prize-gold-glow);
+}
+
+.prize-final-divider {
+    color: var(--tg-theme-hint-color, #888);
+}
+
+.prize-final-total {
+    color: var(--tg-theme-hint-color, #888);
+    font-size: 32px;
+}
+
+.prize-final-meter {
+    width: 80%;
+    max-width: 280px;
+    height: 12px;
+    background: var(--tg-theme-secondary-bg-color, #2b2b3d);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 0 auto 20px;
+}
+
+.prize-final-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffd700, #ff8c00, #ffd700);
+    background-size: 200% auto;
+    border-radius: 6px;
+    transition: width 1s ease-out;
+    animation: shimmer 2s linear infinite;
+    width: 0%;
+}
+
+.prize-final-label {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--tg-theme-text-color, #e0e0e0);
+    line-height: 1.5;
+}
+
+.prize-final-detail {
+    font-size: 14px;
+    color: var(--tg-theme-hint-color, #888);
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+/* ── Level Complete Overlay ───────────────────────────────── */
+.level-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.level-overlay-content {
+    text-align: center;
+    animation: popIn 0.3s ease-out;
+    padding: 40px;
+    border-radius: 20px;
+    background: var(--tg-theme-secondary-bg-color, #2b2b3d);
+    min-width: 200px;
+}
+
+.level-correct .level-overlay-content {
+    border: 2px solid rgba(76, 175, 80, 0.3);
+}
+
+.level-wrong .level-overlay-content {
+    border: 2px solid rgba(244, 67, 54, 0.3);
+}
+
+.level-emoji {
+    font-size: 64px;
+    margin-bottom: 12px;
+}
+
+.level-text {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.level-correct .level-text {
+    color: #4caf50;
+}
+
+.level-wrong .level-text {
+    color: #f44336;
+}
+
+.level-sub {
+    font-size: 16px;
+    color: var(--tg-theme-hint-color, #888);
+    font-weight: 500;
+}
+
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 400px) {
     .logo { font-size: 56px; }
@@ -374,4 +575,5 @@ body {
     .question-text { font-size: 18px; }
     .answer-btn { padding: 14px 16px; font-size: 15px; }
     .result-score { font-size: 40px; }
+    .prize-final-score { font-size: 44px; }
 }

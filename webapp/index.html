@@ -14,7 +14,7 @@
             <div class="start-content">
                 <div class="logo">🧠</div>
                 <h1>Quiz Bot</h1>
-                <p class="subtitle">Проверь свои знания!</p>
+                <p id="start-subtitle" class="subtitle">Проверь свои знания!</p>
                 <div class="topics">
                     <span class="topic">🧪 Наука</span>
                     <span class="topic">📜 История</span>
@@ -25,11 +25,12 @@
             </div>
         </div>
 
-        <!-- Quiz Screen -->
+        <!-- Quiz Screen (regular) -->
         <div id="screen-quiz" class="screen">
             <div class="quiz-header">
                 <div class="progress-info">
                     <span id="question-counter">1 / 12</span>
+                    <span id="score-display" class="score-display">⭐ 0</span>
                 </div>
                 <div class="progress-bar-container">
                     <div id="progress-bar" class="progress-bar"></div>
@@ -41,13 +42,31 @@
             </div>
         </div>
 
-        <!-- Result Screen -->
+        <!-- Prize Quiz Screen -->
+        <div id="screen-prize-quiz" class="screen">
+            <div class="quiz-header">
+                <div class="progress-info">
+                    <span id="prize-question-counter">1 / 10</span>
+                    <span id="prize-level-label" class="prize-level">УРОВЕНЬ 1</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="prize-progress-bar" class="progress-bar prize-progress"></div>
+                </div>
+            </div>
+            <div class="prize-badge">🏆 Призовая игра</div>
+            <div id="prize-question-container" class="question-container">
+                <h2 id="prize-question-text" class="question-text"></h2>
+                <div id="prize-answers" class="answers"></div>
+            </div>
+        </div>
+
+        <!-- Regular Result Screen -->
         <div id="screen-result" class="screen">
             <div class="result-content">
                 <div id="result-emoji" class="result-emoji">🏆</div>
                 <h1 id="result-title" class="result-title">Отлично!</h1>
                 <div class="result-score">
-                    <span id="result-score-num">0</span>
+                    <span id="result-score-num" class="result-score-num">0</span>
                     <span class="result-total">/ <span id="result-total-num">12</span></span>
                 </div>
                 <div class="result-percent-container">
@@ -65,6 +84,37 @@
                     <button id="btn-retry" class="btn btn-primary">🔄 Попробовать снова</button>
                     <button id="btn-share" class="btn btn-secondary">📤 Поделиться</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Prize Result Screen -->
+        <div id="screen-prize-result" class="screen">
+            <div class="prize-result-content">
+                <div class="prize-result-glow">🏆</div>
+                <h1 class="prize-result-title">Призовая игра</h1>
+                <div class="prize-final-score">
+                    <span class="prize-final-big" id="prize-final-score">0</span>
+                    <span class="prize-final-divider">/</span>
+                    <span class="prize-final-total" id="prize-final-total">10</span>
+                </div>
+                <div class="prize-final-meter">
+                    <div class="prize-final-fill" id="prize-final-fill"></div>
+                </div>
+                <p class="prize-final-label" id="prize-final-label">Неплохо! Попробуй ещё!</p>
+                <div class="prize-final-detail">
+                    <p>Твой результат отправлен в бот.</p>
+                    <p>Если ты в топ-3 — получишь приз! 🎁</p>
+                </div>
+                <button id="btn-prize-close" class="btn btn-primary">✅ Готово</button>
+            </div>
+        </div>
+
+        <!-- Level Complete Overlay -->
+        <div id="level-complete" class="level-overlay" style="display:none">
+            <div class="level-overlay-content">
+                <div class="level-emoji" id="level-emoji">✅</div>
+                <div class="level-text" id="level-text">Верно!</div>
+                <div class="level-sub" id="level-sub">+1 балл</div>
             </div>
         </div>
     </div>
