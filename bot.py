@@ -394,7 +394,7 @@ async def award_prizes_if_due() -> None:
 # ── Handlers — CAPTCHA gate ───────────────────────────────────
 
 
-@dp.message(CaptchaNotSolved(), F.text)
+@dp.message(CaptchaNotSolved(), F.text, ~F.text.startswith("/"))
 async def captcha_gate(message: types.Message) -> None:
     """Ловит все сообщения от пользователей, не прошедших капчу."""
     register_or_update_user(message)
